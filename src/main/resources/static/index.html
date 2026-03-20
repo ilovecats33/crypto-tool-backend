@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="hrrps://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+        <title>Crypto Tool</title>
+        <style>
+            body
+            {
+                font-family: 'JetBrains MOno', monospace;
+                letter-spacing: 0.5px;
+                background-color: #121212;
+            }
+            .input-label 
+            {
+                color: #ececec;
+                font-size: 16px;
+            }
+            .output-label
+            {
+                padding-top: 10px;
+                color: #ececec;
+                font-size: 16px;
+            }
+            .main
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 80vh;
+                margin: 0;
+                padding: 0;
+            }
+            .heading1 
+            {
+                border-bottom: 5px solid #ececec;
+                padding-bottom: 5px;
+                width: 100%;
+            }
+            .heading1 h2
+            {
+                padding-left: 30px;
+                padding-top:20px;
+                padding-bottom: 20px;
+                font-size: 32px;
+                margin: 0;
+                color: #ececec;
+            }
+            input
+            {
+                padding: 12px;
+                width: 300px;
+                font-size: 16px;
+                background-color:#ececec;
+                border:2px solid #cce0cc;
+                border-radius: 15px;
+                outline: none;
+                transition: border-colour 0.3s, box-shadow 0.3s;
+            }
+            input:focus
+            {
+                border-color: rgb(148, 192, 206);
+                box-shadow: 0 0 10px rgba(153, 199, 211, 0.952);
+            }
+            button
+            {
+                padding: 12px 24px;
+                font-size: 16px;
+                border:none;
+                border-radius: 12px;
+                background-color: #68c3ffdc;
+                color: #fff;
+                cursor:pointer;
+                margin:5px;
+                transition: background-color 0.3s, transform 0.2s;
+                box-shadow: 0 10x 10px rgb(240, 104, 183);
+            }
+            button:hover 
+            {
+                background-color: #115c6e;
+                transform: translateY(-2px);
+            }
+            #output 
+            {
+                border-radius: 15px;
+                border:4px solid #779cbbe3;
+                background-color: #ececec;
+                padding: 10px;
+                width: 380px;
+                min-height:20px;
+                margin-top: 10px;
+                font-weight: 500;
+                white-space: pre-wrap;
+            }
+        </style>
+    </head>
+<body>
+    <div class="heading1">
+        <h2>Crypto Tool :3</h2>
+    </div>
+<div class="main">
+    <p class="input-label">Enter plain text or Base64 here</p>
+    <input id="input_text" placeholder="Enter Text" />
+<br><br>
+
+<button onclick="encrypt()">Encrypt</button>
+<button onclick="decrypt()">Decrypt</button>
+<p class="output-label">Encrypted or Decrypted Output!</p>
+<p id="output"></p>
+</div>
+
+
+<script>
+    async function encrypt() 
+    {
+        //alert("clicked!"); for checking if the encrypt button was actually clicked or not
+        const text = document.getElementById("input_text").value;
+        const res = await fetch("/encrypt",
+            {
+                method: "POST",
+                headers: {"Content-type": "tet/plain"},
+                body: text
+            });
+        //alert("responce received"); to check if the fetch request completed and the server sent a response
+        const data = await res.text();
+        document.getElementById("output").innerText = data;
+
+    }
+    async function decrypt()
+    {
+        const text = document.getElementById("input_text").value;
+        const res = await fetch("/decrypt",
+            {
+                method: "POST",
+                headers: {"Content-type": "tet/plain"},
+                body: text
+            });
+        const data =await res.text();
+        document.getElementById("output").innerText = data;
+        
+    }
+</script>
+
+</body>
+</html>
